@@ -17,9 +17,12 @@ function loadAll(): Product[] {
   const products: Product[] = files.map((file) => {
     const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
     const { data, content } = matter(raw);
+    let description = content.trim();
+    // Strip Shopify "Lorem ipsum" placeholders left over from the migration.
+    if (/^lorem ipsum/i.test(description)) description = "";
     return {
       ...(data as Omit<Product, "description">),
-      description: content.trim(),
+      description,
     } as Product;
   });
   cache = products

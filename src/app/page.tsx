@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { ProductGrid } from "@/components/product/ProductGrid";
+import { getAllProducts, getFeaturedProducts } from "@/lib/products";
 
 export default function Home() {
+  const featured = getFeaturedProducts(8);
+  const fallback = featured.length ? featured : getAllProducts().slice(0, 8);
+
   return (
     <>
       {/* HERO — editorial split */}
@@ -20,7 +25,7 @@ export default function Home() {
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/shop/fashion"
+                href="/shop"
                 className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors"
               >
                 Shop the collection
@@ -44,12 +49,24 @@ export default function Home() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="container-wide pb-24">
+      <section className="container-wide pb-20">
         <div className="rule pt-10 grid gap-8 md:grid-cols-3">
           {[
-            { title: "Fashion", href: "/shop/fashion", note: "Viscose halter dresses, drapes, festival hats." },
-            { title: "Jewelry", href: "/shop/jewelry", note: "Silver adornments. Spiritual amulets." },
-            { title: "Interiors", href: "/shop/interiors", note: "Lighting, painted decor, ritual objects." },
+            {
+              title: "Fashion",
+              href: "/shop/fashion",
+              note: "Viscose halter dresses, drapes, festival hats.",
+            },
+            {
+              title: "Jewelry",
+              href: "/shop/jewelry",
+              note: "Silver adornments. Spiritual amulets.",
+            },
+            {
+              title: "Interiors",
+              href: "/shop/interiors",
+              note: "Lighting, painted decor, ritual objects.",
+            },
           ].map((c) => (
             <Link
               key={c.href}
@@ -64,6 +81,27 @@ export default function Home() {
             </Link>
           ))}
         </div>
+      </section>
+
+      {/* FEATURED PRODUCTS */}
+      <section className="container-wide pb-24">
+        <header className="rule pt-10 mb-10 flex items-end justify-between">
+          <div>
+            <div className="text-xs uppercase tracking-[0.25em] text-ink-muted mb-2">
+              The collection
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl tracking-tight">
+              Handpicked pieces
+            </h2>
+          </div>
+          <Link
+            href="/shop"
+            className="hidden md:inline text-xs uppercase tracking-widest text-ink-soft hover:text-terracotta transition-colors"
+          >
+            View all →
+          </Link>
+        </header>
+        <ProductGrid products={fallback} priorityCount={4} />
       </section>
     </>
   );
