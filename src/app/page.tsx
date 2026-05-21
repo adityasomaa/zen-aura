@@ -34,16 +34,16 @@ export default function Home() {
             className="object-cover object-center scale-105"
           />
         )}
-        {/* Gradient + cosmic overlay */}
+        {/* Gradient + cosmic overlay — stronger left/bottom shading so text reads */}
         <div
           aria-hidden="true"
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(26,11,30,0.55) 0%, rgba(26,11,30,0.2) 35%, rgba(26,11,30,0.85) 100%)",
+              "linear-gradient(110deg, rgba(26,11,30,0.85) 0%, rgba(26,11,30,0.55) 45%, rgba(26,11,30,0.2) 100%), linear-gradient(180deg, rgba(26,11,30,0.2) 0%, rgba(26,11,30,0.85) 100%)",
           }}
         />
-        <div aria-hidden="true" className="absolute inset-0 starfield opacity-30 mix-blend-screen" />
+        <div aria-hidden="true" className="absolute inset-0 starfield opacity-25 mix-blend-screen" />
 
         <div className="relative container-bleed pb-16 md:pb-24 w-full">
           <div className="max-w-5xl">
@@ -52,7 +52,7 @@ export default function Home() {
             </div>
             <SplitReveal
               as="h1"
-              className="font-display text-cream text-[clamp(3.2rem,11vw,11rem)] leading-[0.88] tracking-[-0.025em]"
+              className="font-display text-cream text-[clamp(3.2rem,11vw,11rem)] leading-[0.88] tracking-[-0.025em] drop-shadow-[0_4px_30px_rgba(26,11,30,0.7)]"
               trigger="mount"
               stagger={0.06}
               delay={0.15}
