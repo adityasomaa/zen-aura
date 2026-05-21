@@ -74,7 +74,9 @@ export function WelcomePopup() {
     });
   }
 
-  function submit(e: React.FormEvent) {
+  const [submitting, setSubmitting] = useState(false);
+
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     const trimmed = value.trim();
@@ -84,16 +86,33 @@ export function WelcomePopup() {
         return;
       }
     } else {
-      // Loose phone validation — at least 8 digits
       const digits = trimmed.replace(/[^\d]/g, "");
       if (digits.length < 8) {
         setError("Please enter a valid WhatsApp number.");
         return;
       }
     }
-    // TODO: POST to /api/newsletter when Resend is wired up.
-    setCode("ZENWELCOME10");
-    setStage("success");
+
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ channel, value: trimmed }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data?.error ?? "Something went wrong. Try again?");
+        setSubmitting(false);
+        return;
+      }
+      setCode(data.code ?? "ZENWELCOME10");
+      setStage("success");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Network error");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (!open) return null;
@@ -194,10 +213,11 @@ export function WelcomePopup() {
               )}
               <button
                 type="submit"
-                className="btn-gold mt-6 w-full"
+                disabled={submitting}
+                className="btn-gold mt-6 w-full disabled:opacity-60"
                 data-cursor="link"
               >
-                Send my 10% off code
+                {submitting ? "Sending…" : "Send my 10% off code"}
               </button>
               <button
                 type="button"

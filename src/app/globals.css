@@ -215,6 +215,48 @@ body {
 }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 
+/* ---------- Cosmic loader (dot + expanding halos) ---------- */
+.loader-orbit {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-dot {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  border-radius: 999px;
+  box-shadow: 0 0 24px rgba(238, 217, 119, 0.55);
+  animation: loaderPulse 1.8s ease-in-out infinite;
+}
+.loader-ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+  opacity: 0;
+  animation: loaderRing 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.loader-ring--delayed { animation-delay: 1.3s; }
+@keyframes loaderPulse {
+  0%, 100% { transform: scale(0.7); opacity: 0.75; }
+  50%      { transform: scale(1);   opacity: 1; }
+}
+@keyframes loaderRing {
+  0%   { transform: scale(1);  opacity: 0.7; }
+  80%  { opacity: 0.05; }
+  100% { transform: scale(8);  opacity: 0; }
+}
+
 /* ---------- Custom cursor ---------- */
 .cursor {
   position: fixed;
