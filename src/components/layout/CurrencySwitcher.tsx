@@ -8,16 +8,16 @@ export function CurrencySwitcher() {
   const setCurrency = useCart((s) => s.setCurrency);
 
   return (
-    <div className="inline-flex border border-line text-xs">
+    <div className="inline-flex rounded-full border border-gold/40 overflow-hidden text-xs">
       {(["USD", "IDR"] as const).map((c) => (
         <button
           key={c}
           onClick={() => setCurrency(c)}
           className={cn(
-            "px-2.5 py-1 transition-colors",
+            "px-2.5 py-1 transition-colors tracking-wider",
             currency === c
-              ? "bg-ink text-paper"
-              : "text-ink-soft hover:text-ink",
+              ? "bg-gold text-midnight"
+              : "text-cream-deep hover:text-gold",
           )}
           aria-pressed={currency === c}
         >

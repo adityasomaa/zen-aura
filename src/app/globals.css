@@ -1,32 +1,60 @@
 @import "tailwindcss";
 
 /* ===========================================================
-   ZenAura Bali — Design Tokens
-   Editorial bohemian: cream paper, charcoal ink, earth accents.
+   ZenAura Bali — Design Tokens (match live Shopify site)
+   Deep cosmic eggplant + gold + sage. Instrument Serif everywhere.
    =========================================================== */
 :root {
-  /* Neutrals — warm paper */
-  --paper: #f6f1ea;
-  --paper-deep: #ece4d8;
-  --ink: #1c1a17;
-  --ink-soft: #4a4640;
-  --ink-muted: #807a72;
-  --line: #d9cfc0;
+  /* Cosmic palette */
+  --midnight: #1a0b1e;
+  --eggplant: #301934;
+  --violet: #4a2a52;
+  --violet-soft: #5e3b6a;
+  --gold: #eed977;
+  --gold-soft: #f5edd1;
+  --gold-bright: #f7e58b;
+  --cream: #f5edd1;
+  --cream-deep: #d4c997;
+  --sage: #c3cca6;
+  --sage-deep: #a3b285;
+  --rose: #d9a3a0;
+  --hairline: #4a2a52;
 
-  /* Earth accents */
-  --terracotta: #b85838;
-  --ochre: #c4904a;
-  --sage: #7a8a6a;
+  /* Semantic — old token names remapped to cosmic palette so
+     existing utility classes continue to read as a coherent set. */
+  --paper: var(--eggplant);
+  --paper-deep: var(--midnight);
+  --ink: var(--cream);
+  --ink-soft: var(--cream-deep);
+  --ink-muted: #9a8e5e;
+  --line: var(--hairline);
+  --terracotta: var(--gold);
+  --ochre: var(--gold-bright);
   --plum: #5e3b4a;
   --teal-deep: #2e4f4a;
 
-  /* Semantic */
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --accent: var(--terracotta);
+  --background: var(--eggplant);
+  --foreground: var(--cream);
+  --accent: var(--gold);
 }
 
 @theme inline {
+  /* New cosmic tokens */
+  --color-midnight: var(--midnight);
+  --color-eggplant: var(--eggplant);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-bright: var(--gold-bright);
+  --color-cream: var(--cream);
+  --color-cream-deep: var(--cream-deep);
+  --color-sage: var(--sage);
+  --color-sage-deep: var(--sage-deep);
+  --color-rose: var(--rose);
+  --color-hairline: var(--hairline);
+
+  /* Legacy aliases (so old utility names still produce on-brand colors) */
   --color-paper: var(--paper);
   --color-paper-deep: var(--paper-deep);
   --color-ink: var(--ink);
@@ -35,16 +63,18 @@
   --color-line: var(--line);
   --color-terracotta: var(--terracotta);
   --color-ochre: var(--ochre);
-  --color-sage: var(--sage);
   --color-plum: var(--plum);
   --color-teal-deep: var(--teal-deep);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
 
-  --font-display: var(--font-cormorant), "Cormorant Garamond", "Times New Roman", serif;
-  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  /* Typography — Instrument Serif throughout, mirroring the Shopify site */
+  --font-display: var(--font-instrument), "Instrument Serif", "Times New Roman", serif;
+  --font-sans: var(--font-instrument), "Instrument Serif", "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --font-script: var(--font-island), "Island Moments", "Brush Script MT", cursive;
 }
 
 html, body { height: 100%; }
@@ -53,17 +83,19 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv11";
+  font-feature-settings: "kern", "liga";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* Display text utility */
 .font-display {
   font-family: var(--font-display);
-  font-feature-settings: "liga", "dlig";
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
+}
+
+.font-script {
+  font-family: var(--font-script);
 }
 
 /* Section gutters */
@@ -71,12 +103,101 @@ body {
 .container-wide   { max-width: 1480px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
 
 /* Hairline divider */
-.rule { border-top: 1px solid var(--line); }
+.rule { border-top: 1px solid var(--hairline); }
+
+/* ---------- Cosmic background (constellation field) ---------- */
+.starfield {
+  background-color: var(--eggplant);
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(245,237,209,0.9), transparent 60%),
+    radial-gradient(1px 1px at 33% 42%, rgba(245,237,209,0.6), transparent 60%),
+    radial-gradient(2px 2px at 71% 12%, rgba(238,217,119,0.8), transparent 60%),
+    radial-gradient(1px 1px at 84% 64%, rgba(245,237,209,0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 22% 78%, rgba(245,237,209,0.7), transparent 60%),
+    radial-gradient(1px 1px at 58% 88%, rgba(245,237,209,0.5), transparent 60%),
+    radial-gradient(1px 1px at 91% 32%, rgba(245,237,209,0.6), transparent 60%),
+    radial-gradient(1px 1px at 47% 56%, rgba(245,237,209,0.4), transparent 60%),
+    radial-gradient(1px 1px at 8% 52%, rgba(245,237,209,0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 64% 28%, rgba(238,217,119,0.5), transparent 60%);
+  background-size: 100% 100%;
+  animation: twinkle 12s ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  0%   { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+/* ---------- Pill button (gold + sage) ---------- */
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  background: var(--gold);
+  color: var(--midnight);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  transition: transform .3s ease, background .3s ease;
+}
+.btn-gold:hover { background: var(--gold-bright); transform: translateY(-2px); }
+
+.btn-sage {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  background: var(--sage);
+  color: var(--midnight);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  transition: transform .3s ease, background .3s ease;
+}
+.btn-sage:hover { background: var(--sage-deep); transform: translateY(-2px); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  transition: background .3s ease, color .3s ease;
+}
+.btn-ghost:hover { background: var(--gold); color: var(--midnight); }
+
+/* ---------- Reveal-on-scroll utility (used with GSAP wrapper) ---------- */
+.reveal-init { opacity: 0; transform: translateY(24px); }
+
+/* ---------- Loader ---------- */
+.zen-loader {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.zen-loader__halo {
+  width: 96px; height: 96px; border-radius: 999px;
+  background: radial-gradient(circle at 50% 50%, rgba(238,217,119,0.35), transparent 70%);
+  position: absolute;
+  animation: halo 2.4s ease-in-out infinite;
+}
+@keyframes halo {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.25); opacity: 1; }
+}
+
+/* ---------- Page-loader fade ---------- */
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
 
 /* Reduce motion respect */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Selection */
+::selection { background: var(--gold); color: var(--midnight); }

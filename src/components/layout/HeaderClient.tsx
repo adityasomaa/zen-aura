@@ -9,16 +9,30 @@ export function HeaderClient() {
   const hydrated = useCart((s) => s.hydrated);
 
   return (
-    <div className="flex items-center gap-5 text-sm">
+    <div className="flex items-center gap-4 text-sm">
       <CurrencySwitcher />
       <Link
         href="/cart"
-        className="text-ink-soft hover:text-ink transition-colors"
+        className="relative inline-flex items-center justify-center w-10 h-10 rounded-full border border-gold/40 text-gold hover:bg-gold hover:text-midnight transition-colors"
+        aria-label={`Cart, ${hydrated ? count : 0} items`}
       >
-        Cart{" "}
-        <span className="text-ink-muted tabular-nums">
-          ({hydrated ? count : 0})
-        </span>
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          aria-hidden="true"
+        >
+          <path d="M4 6h16l-1.5 11.2a2 2 0 0 1-2 1.8H7.5a2 2 0 0 1-2-1.8L4 6Z" />
+          <path d="M8 6V4.5a4 4 0 1 1 8 0V6" />
+        </svg>
+        {hydrated && count > 0 && (
+          <span className="absolute -top-1.5 -right-1.5 bg-gold text-midnight text-[10px] font-display rounded-full w-5 h-5 flex items-center justify-center tabular-nums">
+            {count}
+          </span>
+        )}
       </Link>
     </div>
   );

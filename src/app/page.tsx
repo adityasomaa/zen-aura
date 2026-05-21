@@ -1,5 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ProductGrid } from "@/components/product/ProductGrid";
+import { Reveal } from "@/components/motion/Reveal";
+import { HeroIntro } from "@/components/motion/HeroIntro";
 import { getAllProducts, getFeaturedProducts } from "@/lib/products";
 
 export default function Home() {
@@ -8,100 +11,142 @@ export default function Home() {
 
   return (
     <>
-      {/* HERO — editorial split */}
-      <section className="container-wide pt-12 md:pt-24 pb-20">
-        <div className="grid md:grid-cols-12 gap-10 items-end">
-          <div className="md:col-span-7">
-            <div className="text-xs uppercase tracking-[0.25em] text-ink-muted mb-6">
-              Ubud · Bali · Est. 2023
+      {/* HERO */}
+      <section className="relative starfield overflow-hidden">
+        <div className="container-wide pt-16 md:pt-24 pb-24 md:pb-32 grid lg:grid-cols-2 gap-14 items-center">
+          <HeroIntro>
+            <div className="hero-item italic font-display text-gold-soft/80 text-lg md:text-xl mb-3">
+              Bohemian Fashion &amp; Spiritual Boutique in Ubud
             </div>
-            <h1 className="font-display text-[clamp(2.75rem,8vw,6.5rem)] leading-[0.95] tracking-tight">
-              Cosmic creations <br />
-              for <em className="italic text-terracotta">divine beings.</em>
+            <h1 className="hero-item font-display text-gold leading-[0.95] tracking-tight text-[clamp(3rem,10vw,8rem)]">
+              ZenAura <em className="italic">Bali</em>
             </h1>
-            <p className="mt-8 max-w-xl text-lg text-ink-soft leading-relaxed">
-              Handcrafted bohemian fashion, silver jewelry, and spiritual
-              treasures, made in Ubud by a collective of visionary artisans.
+            <p className="hero-item mt-8 max-w-xl text-lg md:text-xl text-cream-deep leading-relaxed">
+              Discover ZenAura Bali — a unique bohemian boutique in the heart of
+              Ubud offering handcrafted fashion, silver jewelry, spiritual
+              tools, and artistic treasures inspired by Bali&rsquo;s creative
+              and soulful energy.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link
-                href="/shop"
-                className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors"
-              >
+            <div className="hero-item mt-10 flex flex-wrap gap-4">
+              <Link href="/shop" className="btn-gold">
                 Shop the collection
               </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 border border-ink px-6 py-3 text-sm uppercase tracking-widest hover:bg-ink hover:text-paper transition-colors"
-              >
+              <Link href="/about" className="btn-ghost">
                 Our story
               </Link>
             </div>
-          </div>
+          </HeroIntro>
 
-          <div className="md:col-span-5">
-            <div className="aspect-[3/4] bg-gradient-to-br from-paper-deep via-ochre/20 to-terracotta/30 border border-line" />
-            <div className="mt-3 text-xs uppercase tracking-widest text-ink-muted">
-              Halter Dress · Jungle Teal
+          <div className="hidden lg:flex justify-center">
+            <div className="relative w-[420px] h-[420px] xl:w-[520px] xl:h-[520px]">
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(238,217,119,0.18), transparent 70%)",
+                  filter: "blur(20px)",
+                }}
+              />
+              <Image
+                src="/brand/logo.jpg"
+                alt="ZenAura Bali"
+                fill
+                priority
+                sizes="(min-width:1280px) 520px, 420px"
+                className="object-cover rounded-full ring-1 ring-gold/30 shadow-[0_0_60px_rgba(238,217,119,0.25)]"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* CATEGORIES */}
-      <section className="container-wide pb-20">
-        <div className="rule pt-10 grid gap-8 md:grid-cols-3">
-          {[
-            {
-              title: "Fashion",
-              href: "/shop/fashion",
-              note: "Viscose halter dresses, drapes, festival hats.",
-            },
-            {
-              title: "Jewelry",
-              href: "/shop/jewelry",
-              note: "Silver adornments. Spiritual amulets.",
-            },
-            {
-              title: "Interiors",
-              href: "/shop/interiors",
-              note: "Lighting, painted decor, ritual objects.",
-            },
-          ].map((c) => (
-            <Link
-              key={c.href}
-              href={c.href}
-              className="group block border border-line bg-paper hover:bg-paper-deep/40 transition-colors p-8"
-            >
-              <div className="font-display text-3xl mb-2">{c.title}</div>
-              <p className="text-sm text-ink-soft mb-6">{c.note}</p>
-              <span className="text-xs uppercase tracking-widest text-ink-muted group-hover:text-terracotta transition-colors">
-                Browse →
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* FEATURED PRODUCTS */}
-      <section className="container-wide pb-24">
-        <header className="rule pt-10 mb-10 flex items-end justify-between">
-          <div>
-            <div className="text-xs uppercase tracking-[0.25em] text-ink-muted mb-2">
-              The collection
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl tracking-tight">
-              Handpicked pieces
+      {/* VIEW OUR PRODUCTS */}
+      <section className="bg-eggplant pt-16 pb-24">
+        <Reveal className="container-wide">
+          <div className="reveal-item text-center">
+            <h2 className="font-display text-gold text-5xl md:text-7xl tracking-tight">
+              View <em className="italic">Our Products</em>
             </h2>
+            <p className="mt-5 text-cream-deep text-lg max-w-2xl mx-auto">
+              Handcrafted fashion, silver jewelry, and artistic pieces inspired
+              by Bali&rsquo;s creative and soulful energy.
+            </p>
           </div>
-          <Link
-            href="/shop"
-            className="hidden md:inline text-xs uppercase tracking-widest text-ink-soft hover:text-terracotta transition-colors"
-          >
-            View all →
-          </Link>
-        </header>
-        <ProductGrid products={fallback} priorityCount={4} />
+          <div className="reveal-item mt-12">
+            <ProductGrid products={fallback} priorityCount={4} />
+          </div>
+          <div className="reveal-item mt-14 text-center">
+            <Link href="/shop" className="btn-gold">
+              View all 40 pieces
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* CATEGORY CIRCLES */}
+      <section className="bg-eggplant pb-24">
+        <Reveal className="container-wide">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-14">
+            {[
+              { title: "Fashion", href: "/shop/fashion" },
+              { title: "Interiors", href: "/shop/interiors" },
+              { title: "Jewelry", href: "/shop/jewelry" },
+            ].map((c) => (
+              <Link
+                key={c.href}
+                href={c.href}
+                className="reveal-item group relative aspect-square rounded-full overflow-hidden flex items-center justify-center transition-transform duration-700 hover:scale-[1.03]"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 55%, #690dac 0%, #301934 70%)",
+                  boxShadow: "inset 0 0 60px rgba(238,217,119,0.18)",
+                }}
+              >
+                <div
+                  className="absolute inset-0 starfield opacity-60 mix-blend-screen"
+                  aria-hidden="true"
+                />
+                <div className="relative font-script text-gold text-6xl md:text-7xl lg:text-8xl drop-shadow-[0_0_20px_rgba(238,217,119,0.5)]">
+                  {c.title}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      {/* SPLIT — about teaser */}
+      <section className="bg-midnight">
+        <Reveal className="container-wide py-20 md:py-28 grid md:grid-cols-12 gap-12 items-center">
+          <div className="md:col-span-7 reveal-item">
+            <div className="text-xs uppercase tracking-[0.3em] text-gold/70 mb-5">
+              Our story
+            </div>
+            <h2 className="font-display text-cream text-4xl md:text-6xl leading-[1.05] tracking-tight">
+              Born of <em className="italic text-gold">creativity,</em>{" "}
+              community, and the magical spirit of Bali.
+            </h2>
+            <p className="mt-7 text-cream-deep text-lg max-w-2xl leading-relaxed">
+              ZenAura is more than a boutique — it is a living collaboration
+              between visionary curators and incredibly talented local artisans,
+              rooted in the spiritual heart of Ubud.
+            </p>
+            <Link href="/about" className="mt-9 btn-sage">
+              Read the story
+            </Link>
+          </div>
+          <div className="md:col-span-5 reveal-item">
+            <div
+              className="aspect-[4/5] rounded-3xl overflow-hidden ring-1 ring-gold/20"
+              style={{
+                background:
+                  "linear-gradient(135deg, #4a2a52, #301934 60%, #1a0b1e)",
+              }}
+            >
+              <div className="w-full h-full starfield" />
+            </div>
+          </div>
+        </Reveal>
       </section>
     </>
   );

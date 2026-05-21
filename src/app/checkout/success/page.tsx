@@ -22,10 +22,7 @@ export default function SuccessPage() {
         Your order is on its way through the Ubud workshop. You&rsquo;ll receive a
         confirmation email shortly, and tracking details once your parcel ships.
       </p>
-      <Link
-        href="/shop"
-        className="mt-12 inline-flex items-center bg-ink text-paper px-6 py-3 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors"
-      >
+      <Link href="/shop" className="mt-12 btn-gold">
         Keep browsing
       </Link>
     </section>

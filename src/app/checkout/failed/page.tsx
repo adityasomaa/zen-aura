@@ -19,17 +19,14 @@ export default function FailedPage() {
         Instagram if the issue persists.
       </p>
       <div className="mt-12 flex flex-wrap justify-center gap-4">
-        <Link
-          href="/cart"
-          className="inline-flex items-center bg-ink text-paper px-6 py-3 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors"
-        >
+        <Link href="/cart" className="btn-gold">
           Back to cart
         </Link>
         <a
           href="https://instagram.com/zenaura_bali"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center border border-ink px-6 py-3 text-sm uppercase tracking-widest hover:bg-ink hover:text-paper transition-colors"
+          className="btn-ghost"
         >
           Contact us
         </a>

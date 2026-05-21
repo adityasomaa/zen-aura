@@ -96,10 +96,7 @@ export default function CartPage() {
         <p className="mt-4 text-ink-soft">
           Nothing here yet. Wander the collection.
         </p>
-        <Link
-          href="/shop"
-          className="mt-10 inline-flex items-center bg-ink text-paper px-6 py-3 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors"
-        >
+        <Link href="/shop" className="mt-10 btn-gold">
           Browse the shop
         </Link>
       </section>
@@ -231,8 +228,8 @@ export default function CartPage() {
             onClick={checkout}
             disabled={checkingOut}
             className={cn(
-              "mt-6 w-full bg-ink text-paper py-4 text-sm uppercase tracking-widest transition-colors disabled:opacity-50",
-              "hover:bg-terracotta",
+              "mt-6 w-full rounded-full bg-gold text-midnight py-4 text-base tracking-widest transition-all duration-300 disabled:opacity-50",
+              "hover:bg-gold-bright hover:-translate-y-0.5",
             )}
           >
             {checkingOut

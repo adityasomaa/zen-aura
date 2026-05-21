@@ -33,7 +33,7 @@ export function AddToCart({ product }: Props) {
     <>
       {product.variants.length > 1 && (
         <div className="mt-8">
-          <div className="text-xs uppercase tracking-widest text-ink-muted mb-3">
+          <div className="text-xs uppercase tracking-widest text-gold/70 mb-3">
             Variant
           </div>
           <div className="flex flex-wrap gap-2">
@@ -43,10 +43,10 @@ export function AddToCart({ product }: Props) {
                 onClick={() => setVariantId(v.id)}
                 disabled={!v.inStock}
                 className={cn(
-                  "border px-4 py-2 text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed",
+                  "rounded-full border px-4 py-2 text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed",
                   variantId === v.id
-                    ? "border-ink bg-ink text-paper"
-                    : "border-line hover:border-ink",
+                    ? "border-gold bg-gold text-midnight"
+                    : "border-gold/40 text-cream hover:border-gold",
                 )}
               >
                 {v.label}
@@ -60,10 +60,10 @@ export function AddToCart({ product }: Props) {
         onClick={add}
         disabled={disabled || adding}
         className={cn(
-          "mt-10 w-full py-4 text-sm uppercase tracking-widest transition-colors disabled:opacity-40 disabled:cursor-not-allowed",
+          "mt-10 w-full rounded-full py-4 text-base tracking-widest transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed",
           added
-            ? "bg-sage text-paper"
-            : "bg-ink text-paper hover:bg-terracotta",
+            ? "bg-sage text-midnight"
+            : "bg-gold text-midnight hover:bg-gold-bright hover:-translate-y-0.5",
         )}
       >
         {disabled

@@ -17,12 +17,14 @@ export function ProductPriceDisplay({ priceUsd, priceIdr, compareAtUsd }: Props)
 
   return (
     <div className="mt-6 flex items-baseline gap-3">
-      <div className="text-2xl tabular-nums">{formatPrice(primary, currency)}</div>
-      <div className="text-sm text-ink-muted tabular-nums">
+      <div className="text-3xl tabular-nums text-gold">
+        {formatPrice(primary, currency)}
+      </div>
+      <div className="text-sm text-cream-deep tabular-nums">
         {formatPrice(secondary, secondaryCurrency)}
       </div>
       {compareAtUsd && compareAtUsd > priceUsd && (
-        <div className="text-sm text-ink-muted line-through">
+        <div className="text-sm text-cream-deep/60 line-through">
           {formatPrice(currency === "USD" ? compareAtUsd : compareAtUsd * 16000, currency)}
         </div>
       )}
