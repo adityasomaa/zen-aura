@@ -8,12 +8,21 @@ interface Props {
   priority?: boolean;
   /** Aspect ratio class — defaults to portrait. */
   aspect?: string;
+  /** Visual size — controls title scale. */
+  size?: "sm" | "md" | "lg";
 }
+
+const TITLE_SIZE = {
+  sm: "text-[15px]",
+  md: "text-base md:text-[17px]",
+  lg: "text-xl md:text-2xl",
+};
 
 export function ProductCard({
   product,
   priority,
-  aspect = "aspect-[3/4]",
+  aspect = "aspect-[4/5]",
+  size = "md",
 }: Props) {
   const front = product.images[0];
   const back = product.images[1] ?? product.images[0];
@@ -27,7 +36,7 @@ export function ProductCard({
       data-cursor="link"
     >
       <div
-        className={`peek-card relative ${aspect} overflow-hidden rounded-[28px] ring-1 ring-violet bg-violet`}
+        className={`peek-card relative ${aspect} overflow-hidden rounded-2xl ring-1 ring-violet/60 bg-violet`}
       >
         {front && (
           <Image
@@ -49,21 +58,20 @@ export function ProductCard({
           />
         )}
         {product.compareAtUsd && product.compareAtUsd > product.priceUsd && (
-          <div className="absolute top-4 left-4 bg-midnight/85 text-gold text-[10px] uppercase tracking-[0.2em] px-3 py-1 rounded-full backdrop-blur-sm">
+          <div className="absolute top-3 left-3 bg-midnight/85 text-gold text-[10px] uppercase tracking-[0.18em] px-2.5 py-1 rounded-full backdrop-blur-sm">
             Sale
           </div>
         )}
-        <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-midnight/60 backdrop-blur-md text-gold text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          View piece →
-        </div>
       </div>
-      <div className="mt-5 flex items-start justify-between gap-3">
+      <div className="mt-3 flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <div className="font-display text-2xl leading-tight text-cream group-hover:text-gold transition-colors">
+          <div
+            className={`font-display ${TITLE_SIZE[size]} leading-snug text-cream group-hover:text-gold transition-colors line-clamp-2`}
+          >
             {cleanTitle}
           </div>
-          {product.subtitle && (
-            <div className="text-[13px] italic text-cream-deep mt-1">
+          {product.subtitle && size !== "sm" && (
+            <div className="text-[12px] italic text-cream-deep mt-0.5 truncate">
               {product.subtitle}
             </div>
           )}

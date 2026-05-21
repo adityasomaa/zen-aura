@@ -12,7 +12,7 @@ export function ProductCardPrice({ priceUsd, priceIdr }: Props) {
   const currency = useCart((s) => s.currency);
   const value = currency === "USD" ? priceUsd : priceIdr;
   return (
-    <span className="text-base shrink-0 text-gold tabular-nums">
+    <span className="text-sm shrink-0 text-gold tabular-nums whitespace-nowrap">
       {formatPrice(value, currency)}
     </span>
   );
