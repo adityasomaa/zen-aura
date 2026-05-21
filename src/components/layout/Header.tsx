@@ -1,15 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeaderClient } from "./HeaderClient";
-
-const NAV = [
-  { href: "/shop/fashion", label: "Fashion" },
-  { href: "/shop/interiors", label: "Interiors" },
-  { href: "/shop/jewelry", label: "Jewelry" },
-  { href: "/about", label: "About Us" },
-  { href: "/meet-the-creators", label: "Meet the Creators" },
-  { href: "/shipping", label: "Shipping" },
-];
+import { NavMenu } from "./NavMenu";
 
 export function Header() {
   return (
@@ -34,17 +26,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-7 text-[15px]">
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className="text-cream-deep hover:text-gold transition-colors"
-            >
-              {n.label}
-            </Link>
-          ))}
-        </nav>
+        <NavMenu />
 
         <HeaderClient />
       </div>
