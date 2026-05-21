@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.shopify.com" },
     ],
     formats: ["image/avif", "image/webp"],
+    // Allow our static SVG placeholders (e.g. /placeholders/cosmic.svg).
+    // We only ever render SVGs we authored ourselves, so the usual
+    // SVG-XSS risk does not apply.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy:
+      "default-src 'self'; script-src 'none'; sandbox;",
   },
   experimental: {
     mdxRs: true,

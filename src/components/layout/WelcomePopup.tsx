@@ -28,9 +28,9 @@ export function WelcomePopup() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (localStorage.getItem("zen-welcome-seen") === "1") return;
-    const t = window.setTimeout(() => setOpen(true), 6500);
+    // Show shortly after the page-transition splash fades (~500ms).
+    const t = window.setTimeout(() => setOpen(true), 650);
     return () => window.clearTimeout(t);
   }, []);
 
