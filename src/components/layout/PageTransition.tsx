@@ -3,31 +3,30 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-type Phase = "below" | "covering" | "above";
+type Phase = "hidden" | "showing";
 
 /**
- * Handles two roles:
+ * Fade-only transition. Two roles:
  *  1. Initial-load splash — renders covering the viewport on first paint,
- *     then slides up off-screen once the document is ready.
- *  2. Per-route curtain — when pathname changes, the panel slides up from
- *     below, briefly covers the viewport, then slides up off-screen.
+ *     fades out once the document is ready.
+ *  2. Per-route fade — when pathname changes, fades in, briefly holds,
+ *     then fades back out.
  *
- * No logo image — the wordmark is set in Fraunces italic with a thin
- * gold rule underneath. Matches the rest of the type system.
+ * No logo image — wordmark only, in Fraunces italic.
  */
 export function PageTransition() {
   const pathname = usePathname();
   const firstRun = useRef(true);
-  const [phase, setPhase] = useState<Phase>("covering");
+  const [phase, setPhase] = useState<Phase>("showing");
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     if (firstRun.current) {
       firstRun.current = false;
-      // Initial splash — exit upward once the document is ready
+      // Initial splash — fade out once the document is ready
       const exit = () => {
-        const t = setTimeout(() => setPhase("above"), 350);
+        const t = setTimeout(() => setPhase("hidden"), 350);
         timers.push(t);
       };
       if (typeof document !== "undefined" && document.readyState === "complete") {
@@ -36,15 +35,10 @@ export function PageTransition() {
         window.addEventListener("load", exit, { once: true });
       }
     } else {
-      // Subsequent navigation — sweep in from below, briefly cover, sweep up
-      setPhase("below");
-      // Use rAF to ensure the "below" phase paints before we transition
-      const raf = requestAnimationFrame(() => {
-        const t1 = setTimeout(() => setPhase("covering"), 30);
-        const t2 = setTimeout(() => setPhase("above"), 520);
-        timers.push(t1, t2);
-      });
-      timers.push(raf as unknown as ReturnType<typeof setTimeout>);
+      // Subsequent navigation — fade in, hold, fade out
+      setPhase("showing");
+      const t = setTimeout(() => setPhase("hidden"), 480);
+      timers.push(t);
     }
 
     return () => {
@@ -52,21 +46,20 @@ export function PageTransition() {
     };
   }, [pathname]);
 
-  const translate =
-    phase === "below"
-      ? "translate3d(0, 100%, 0)"
-      : phase === "above"
-        ? "translate3d(0, -100%, 0)"
-        : "translate3d(0, 0, 0)";
+  const shown = phase === "showing";
 
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 z-[10000] pointer-events-none bg-midnight flex items-center justify-center"
+      className="fixed inset-0 z-[10000] bg-midnight flex items-center justify-center"
       style={{
-        transform: translate,
-        transition: "transform 480ms cubic-bezier(0.76, 0, 0.24, 1)",
-        willChange: "transform",
+        opacity: shown ? 1 : 0,
+        visibility: shown ? "visible" : "hidden",
+        transition:
+          "opacity 420ms cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear " +
+          (shown ? "0s" : "420ms"),
+        pointerEvents: shown ? "none" : "none",
+        willChange: "opacity",
       }}
     >
       <div className="text-center">
@@ -79,15 +72,6 @@ export function PageTransition() {
             Cosmic creations
           </div>
           <span className="hidden md:block w-16 h-px bg-gold/40" />
-        </div>
-        <div className="mt-3 mx-auto w-40 h-px bg-gold/40 overflow-hidden relative">
-          <span
-            className="absolute inset-y-0 left-0 bg-gold"
-            style={{
-              width: phase === "covering" ? "100%" : "0%",
-              transition: phase === "covering" ? "width 700ms ease-out" : "none",
-            }}
-          />
         </div>
       </div>
     </div>
