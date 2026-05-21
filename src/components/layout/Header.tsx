@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HeaderClient } from "./HeaderClient";
 
 const NAV = [
   { href: "/shop/fashion", label: "Fashion" },
@@ -28,20 +29,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-5 text-sm">
-          <button
-            aria-label="Switch currency"
-            className="text-ink-soft hover:text-ink transition-colors"
-          >
-            USD
-          </button>
-          <Link
-            href="/cart"
-            className="text-ink-soft hover:text-ink transition-colors"
-          >
-            Cart <span className="text-ink-muted">(0)</span>
-          </Link>
-        </div>
+        <HeaderClient />
       </div>
     </header>
   );

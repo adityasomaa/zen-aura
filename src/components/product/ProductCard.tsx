@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { formatPrice } from "@/lib/currency";
 import type { Product } from "@/lib/types";
+import { ProductCardPrice } from "./ProductCardPrice";
 
 interface Props {
   product: Product;
@@ -46,9 +46,10 @@ export function ProductCard({ product, priority }: Props) {
             </div>
           )}
         </div>
-        <div className="text-sm shrink-0 text-ink-soft tabular-nums">
-          {formatPrice(product.priceUsd, "USD")}
-        </div>
+        <ProductCardPrice
+          priceUsd={product.priceUsd}
+          priceIdr={product.priceIdr}
+        />
       </div>
     </Link>
   );

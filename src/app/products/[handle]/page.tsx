@@ -2,13 +2,13 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductGrid } from "@/components/product/ProductGrid";
+import { AddToCart } from "@/components/product/AddToCart";
+import { ProductPriceDisplay } from "@/components/product/ProductPriceDisplay";
 import {
   getAllProducts,
   getProductByHandle,
   getProductsByCategory,
 } from "@/lib/products";
-import { formatPrice } from "@/lib/currency";
-
 export function generateStaticParams() {
   return getAllProducts().map((p) => ({ handle: p.handle }));
 }
@@ -71,42 +71,13 @@ export default async function ProductPage({
             <div className="mt-2 text-ink-soft">{product.subtitle}</div>
           )}
 
-          <div className="mt-6 flex items-baseline gap-3">
-            <div className="text-2xl tabular-nums">
-              {formatPrice(product.priceUsd, "USD")}
-            </div>
-            <div className="text-sm text-ink-muted tabular-nums">
-              {formatPrice(product.priceIdr, "IDR")}
-            </div>
-            {product.compareAtUsd && product.compareAtUsd > product.priceUsd && (
-              <div className="text-sm text-ink-muted line-through">
-                {formatPrice(product.compareAtUsd, "USD")}
-              </div>
-            )}
-          </div>
+          <ProductPriceDisplay
+            priceUsd={product.priceUsd}
+            priceIdr={product.priceIdr}
+            compareAtUsd={product.compareAtUsd}
+          />
 
-          {product.variants.length > 1 && (
-            <div className="mt-8">
-              <div className="text-xs uppercase tracking-widest text-ink-muted mb-3">
-                Variant
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {product.variants.map((v) => (
-                  <button
-                    key={v.id}
-                    disabled={!v.inStock}
-                    className="border border-line hover:border-ink px-4 py-2 text-sm transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {v.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <button className="mt-10 w-full bg-ink text-paper py-4 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors">
-            Add to cart
-          </button>
+          <AddToCart product={product} />
 
           {paragraphs.length > 0 && (
             <div className="mt-10 space-y-4 text-ink-soft leading-relaxed">
