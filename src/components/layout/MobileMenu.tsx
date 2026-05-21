@@ -115,7 +115,13 @@ function Overlay({ open, pathname, onClose, currency, setCurrency }: OverlayProp
         bottom: 0,
         zIndex: 9700,
         backgroundColor: "#301934",
-        display: open ? "block" : "none",
+        opacity: open ? 1 : 0,
+        visibility: open ? "visible" : "hidden",
+        transform: open ? "translate3d(0,0,0)" : "translate3d(100%,0,0)",
+        transition:
+          "transform 480ms cubic-bezier(0.76, 0, 0.24, 1), opacity 320ms ease, visibility 0s linear " +
+          (open ? "0s" : "480ms"),
+        willChange: "transform, opacity",
       }}
       className="lg:hidden"
     >
