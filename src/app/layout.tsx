@@ -4,7 +4,7 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Loader } from "@/components/layout/Loader";
+import { PageTransition } from "@/components/layout/PageTransition";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { Cursor } from "@/components/motion/Cursor";
 
@@ -40,7 +40,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${island.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-eggplant text-cream selection-gold">
-        <Loader />
+        <PageTransition />
         <Cursor />
         <SmoothScroll />
         <Header />
