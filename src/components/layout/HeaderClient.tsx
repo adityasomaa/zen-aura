@@ -3,14 +3,17 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart-store";
 import { CurrencySwitcher } from "./CurrencySwitcher";
+import { MobileMenu } from "./MobileMenu";
 
 export function HeaderClient() {
   const count = useCart((s) => s.lines.reduce((n, l) => n + l.quantity, 0));
   const hydrated = useCart((s) => s.hydrated);
 
   return (
-    <div className="flex items-center gap-4 text-sm">
-      <CurrencySwitcher />
+    <div className="flex items-center gap-3 md:gap-4 text-sm">
+      <div className="hidden lg:block">
+        <CurrencySwitcher />
+      </div>
       <Link
         href="/cart"
         className="relative inline-flex items-center justify-center w-10 h-10 rounded-full border border-gold/40 text-gold hover:bg-gold hover:text-midnight transition-colors"
@@ -34,6 +37,7 @@ export function HeaderClient() {
           </span>
         )}
       </Link>
+      <MobileMenu />
     </div>
   );
 }
