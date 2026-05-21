@@ -6,51 +6,64 @@ import { ProductCardPrice } from "./ProductCardPrice";
 interface Props {
   product: Product;
   priority?: boolean;
+  /** Aspect ratio class — defaults to portrait. */
+  aspect?: string;
 }
 
-export function ProductCard({ product, priority }: Props) {
-  const cover = product.images[0];
+export function ProductCard({
+  product,
+  priority,
+  aspect = "aspect-[3/4]",
+}: Props) {
+  const front = product.images[0];
+  const back = product.images[1] ?? product.images[0];
   const cleanTitle = product.title.replace(/[🪬🌴🔮✨💫]/g, "").trim();
+
   return (
     <Link
       href={`/products/${product.handle}`}
       className="group block"
       aria-label={cleanTitle}
+      data-cursor="link"
     >
-      <div className="relative aspect-[3/4] overflow-hidden rounded-3xl ring-1 ring-violet bg-violet">
-        {cover ? (
+      <div
+        className={`peek-card relative ${aspect} overflow-hidden rounded-[28px] ring-1 ring-violet bg-violet`}
+      >
+        {front && (
           <Image
-            src={cover.src}
-            alt={cover.alt}
+            src={front.src}
+            alt={front.alt}
             fill
             sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-            className="object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.06]"
+            className="peek-front object-cover"
             priority={priority}
           />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-violet to-midnight" />
+        )}
+        {back && back !== front && (
+          <Image
+            src={back.src}
+            alt={back.alt}
+            fill
+            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
+            className="peek-back object-cover"
+          />
         )}
         {product.compareAtUsd && product.compareAtUsd > product.priceUsd && (
-          <div className="absolute top-3 left-3 bg-midnight/85 text-gold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-sm">
+          <div className="absolute top-4 left-4 bg-midnight/85 text-gold text-[10px] uppercase tracking-[0.2em] px-3 py-1 rounded-full backdrop-blur-sm">
             Sale
           </div>
         )}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{
-            background:
-              "linear-gradient(180deg, transparent 55%, rgba(26,11,30,0.6))",
-          }}
-          aria-hidden="true"
-        />
+        <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-midnight/60 backdrop-blur-md text-gold text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          View piece →
+        </div>
       </div>
-      <div className="mt-4 flex items-start justify-between gap-3">
+      <div className="mt-5 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="font-display text-xl leading-tight text-cream group-hover:text-gold transition-colors">
+          <div className="font-display text-2xl leading-tight text-cream group-hover:text-gold transition-colors">
             {cleanTitle}
           </div>
           {product.subtitle && (
-            <div className="text-sm italic text-cream-deep mt-0.5">
+            <div className="text-[13px] italic text-cream-deep mt-1">
               {product.subtitle}
             </div>
           )}

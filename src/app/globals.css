@@ -1,18 +1,20 @@
 @import "tailwindcss";
 
 /* ===========================================================
-   ZenAura Bali — Design Tokens (match live Shopify site)
-   Deep cosmic eggplant + gold + sage. Instrument Serif everywhere.
+   ZenAura Bali — Cosmic editorial
+   Palette mirrors Shopify; type system upgraded to Fraunces+Inter.
    =========================================================== */
 :root {
   /* Cosmic palette */
   --midnight: #1a0b1e;
   --eggplant: #301934;
+  --eggplant-deep: #240f2a;
   --violet: #4a2a52;
   --violet-soft: #5e3b6a;
   --gold: #eed977;
   --gold-soft: #f5edd1;
   --gold-bright: #f7e58b;
+  --gold-deep: #c9a948;
   --cream: #f5edd1;
   --cream-deep: #d4c997;
   --sage: #c3cca6;
@@ -20,8 +22,7 @@
   --rose: #d9a3a0;
   --hairline: #4a2a52;
 
-  /* Semantic — old token names remapped to cosmic palette so
-     existing utility classes continue to read as a coherent set. */
+  /* Legacy aliases */
   --paper: var(--eggplant);
   --paper-deep: var(--midnight);
   --ink: var(--cream);
@@ -39,14 +40,15 @@
 }
 
 @theme inline {
-  /* New cosmic tokens */
   --color-midnight: var(--midnight);
   --color-eggplant: var(--eggplant);
+  --color-eggplant-deep: var(--eggplant-deep);
   --color-violet: var(--violet);
   --color-violet-soft: var(--violet-soft);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-gold-bright: var(--gold-bright);
+  --color-gold-deep: var(--gold-deep);
   --color-cream: var(--cream);
   --color-cream-deep: var(--cream-deep);
   --color-sage: var(--sage);
@@ -54,7 +56,6 @@
   --color-rose: var(--rose);
   --color-hairline: var(--hairline);
 
-  /* Legacy aliases (so old utility names still produce on-brand colors) */
   --color-paper: var(--paper);
   --color-paper-deep: var(--paper-deep);
   --color-ink: var(--ink);
@@ -70,42 +71,60 @@
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
 
-  /* Typography — Instrument Serif throughout, mirroring the Shopify site */
-  --font-display: var(--font-instrument), "Instrument Serif", "Times New Roman", serif;
-  --font-sans: var(--font-instrument), "Instrument Serif", "Times New Roman", serif;
+  /* Type system */
+  --font-display: var(--font-fraunces), "Fraunces", "Times New Roman", serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   --font-script: var(--font-island), "Island Moments", "Brush Script MT", cursive;
 }
 
 html, body { height: 100%; }
+html { scroll-behavior: auto; } /* Lenis takes over */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-feature-settings: "kern", "liga";
+  font-feature-settings: "kern", "liga", "calt", "ss01";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  cursor: none;
 }
 
+/* Display headings — Fraunces with optical sizing for confidence */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.005em;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.02em;
+}
+.font-display-soft {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
 }
 
 .font-script {
   font-family: var(--font-script);
 }
 
+/* Re-enable native cursor on touch / coarse pointers */
+@media (pointer: coarse) {
+  body { cursor: auto; }
+}
+
 /* Section gutters */
 .container-narrow { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
 .container-wide   { max-width: 1480px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+.container-bleed  { max-width: 1840px; margin-inline: auto; padding-inline: clamp(1rem, 3vw, 2rem); }
 
 /* Hairline divider */
 .rule { border-top: 1px solid var(--hairline); }
 
-/* ---------- Cosmic background (constellation field) ---------- */
+/* Selection */
+.selection-gold ::selection { background: var(--gold); color: var(--midnight); }
+
+/* ---------- Cosmic starfield ---------- */
 .starfield {
   background-color: var(--eggplant);
   background-image:
@@ -119,53 +138,82 @@ body {
     radial-gradient(1px 1px at 47% 56%, rgba(245,237,209,0.4), transparent 60%),
     radial-gradient(1px 1px at 8% 52%, rgba(245,237,209,0.5), transparent 60%),
     radial-gradient(1.5px 1.5px at 64% 28%, rgba(238,217,119,0.5), transparent 60%);
-  background-size: 100% 100%;
   animation: twinkle 12s ease-in-out infinite alternate;
 }
-@keyframes twinkle {
-  0%   { opacity: 0.85; }
-  100% { opacity: 1; }
+@keyframes twinkle { 0%{opacity:.85} 100%{opacity:1} }
+
+/* Subtle grain to make sections feel filmic */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96 0 0 0 0 0.93 0 0 0 0 0.82 0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+  opacity: 0.4;
 }
 
-/* ---------- Pill button (gold + sage) ---------- */
+/* ---------- Pill button system ---------- */
 .btn-gold {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 0.85rem 1.6rem;
+  padding: 0.95rem 1.8rem;
   background: var(--gold);
   color: var(--midnight);
   border-radius: 999px;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  transition: transform .3s ease, background .3s ease;
+  font: 500 0.9rem/1 var(--font-sans);
+  letter-spacing: 0.01em;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), background .35s ease, box-shadow .35s ease;
 }
-.btn-gold:hover { background: var(--gold-bright); transform: translateY(-2px); }
+.btn-gold:hover {
+  background: var(--gold-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px -8px rgba(238,217,119,0.4);
+}
 
 .btn-sage {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 0.85rem 1.6rem;
+  padding: 0.95rem 1.8rem;
   background: var(--sage);
   color: var(--midnight);
   border-radius: 999px;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  transition: transform .3s ease, background .3s ease;
+  font: 500 0.9rem/1 var(--font-sans);
+  transition: transform .35s ease, background .35s ease;
 }
 .btn-sage:hover { background: var(--sage-deep); transform: translateY(-2px); }
 
 .btn-ghost {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 0.85rem 1.6rem;
+  padding: 0.95rem 1.8rem;
   border: 1px solid var(--gold);
   color: var(--gold);
   border-radius: 999px;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-  transition: background .3s ease, color .3s ease;
+  font: 500 0.9rem/1 var(--font-sans);
+  transition: background .35s ease, color .35s ease;
 }
 .btn-ghost:hover { background: var(--gold); color: var(--midnight); }
 
-/* ---------- Reveal-on-scroll utility (used with GSAP wrapper) ---------- */
-.reveal-init { opacity: 0; transform: translateY(24px); }
+/* ---------- Marquee ---------- */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 4rem;
+  padding-inline: 2rem;
+  animation: marquee 40s linear infinite;
+  white-space: nowrap;
+}
+@keyframes marquee {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-100%,0,0); }
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
 
 /* ---------- Loader ---------- */
 .zen-loader {
@@ -185,10 +233,42 @@ body {
   50%      { transform: scale(1.25); opacity: 1; }
 }
 
-/* ---------- Page-loader fade ---------- */
-@keyframes fadeOut {
-  to { opacity: 0; visibility: hidden; }
+/* ---------- Custom cursor ---------- */
+.cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 16px; height: 16px;
+  border-radius: 999px;
+  background: var(--gold);
+  mix-blend-mode: screen;
+  transform: translate3d(-50%, -50%, 0);
+  transition: width .35s cubic-bezier(.2,.8,.2,1),
+              height .35s cubic-bezier(.2,.8,.2,1),
+              opacity .35s ease,
+              background .35s ease;
 }
+.cursor[data-state="link"] {
+  width: 56px; height: 56px;
+  background: rgba(238,217,119,0.25);
+  border: 1px solid rgba(238,217,119,0.7);
+}
+.cursor[data-state="hidden"] { opacity: 0; }
+
+/* ---------- Editorial product card hover swap ---------- */
+.peek-card { position: relative; }
+.peek-card .peek-back {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity .9s ease, transform 1.2s cubic-bezier(.2,.8,.2,1);
+}
+.peek-card:hover .peek-back { opacity: 1; transform: scale(1); }
+.peek-card .peek-front {
+  transition: opacity .9s ease, transform 1.2s cubic-bezier(.2,.8,.2,1);
+}
+.peek-card:hover .peek-front { opacity: 0; transform: scale(1.04); }
 
 /* Reduce motion respect */
 @media (prefers-reduced-motion: reduce) {
@@ -197,7 +277,6 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+  body { cursor: auto; }
+  .cursor { display: none; }
 }
-
-/* Selection */
-::selection { background: var(--gold); color: var(--midnight); }

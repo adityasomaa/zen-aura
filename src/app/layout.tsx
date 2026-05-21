@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Island_Moments } from "next/font/google";
+import { Fraunces, Inter, Island_Moments } from "next/font/google";
 import "./globals.css";
 import { defaultMetadata } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Loader } from "@/components/layout/Loader";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { Cursor } from "@/components/motion/Cursor";
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400"],
   style: ["normal", "italic"],
+  axes: ["SOFT", "WONK", "opsz"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -29,10 +37,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrument.variable} ${island.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${inter.variable} ${island.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-eggplant text-cream">
+      <body className="min-h-full flex flex-col bg-eggplant text-cream selection-gold">
         <Loader />
+        <Cursor />
+        <SmoothScroll />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
