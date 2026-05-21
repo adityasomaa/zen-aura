@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { WelcomePopup } from "@/components/layout/WelcomePopup";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { HideOnAdmin } from "@/components/layout/HideOnAdmin";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { Cursor } from "@/components/motion/Cursor";
 
@@ -43,13 +44,19 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-eggplant text-cream selection-gold">
         <PageTransition />
-        <WelcomePopup />
-        <CookieConsent />
+        <HideOnAdmin>
+          <WelcomePopup />
+          <CookieConsent />
+        </HideOnAdmin>
         <Cursor />
         <SmoothScroll />
-        <Header />
+        <HideOnAdmin>
+          <Header />
+        </HideOnAdmin>
         <main className="flex-1">{children}</main>
-        <Footer />
+        <HideOnAdmin>
+          <Footer />
+        </HideOnAdmin>
       </body>
     </html>
   );

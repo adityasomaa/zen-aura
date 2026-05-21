@@ -71,6 +71,36 @@ export default async function AdminOrdersPage({
     .reduce((sum, o) => sum + o.amount, 0);
 
   return (
+    <>
+      {/* Admin top bar (login page omits this) */}
+      <header className="border-b border-violet">
+        <div className="container-wide flex items-center justify-between py-4 gap-4">
+          <Link href="/admin/orders" className="flex items-center gap-2">
+            <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
+            <span className="text-[10px] uppercase tracking-[0.32em] text-gold/70">
+              ZenAura · Admin
+            </span>
+          </Link>
+          <nav className="flex items-center gap-4 text-[12px] uppercase tracking-[0.22em]">
+            <Link
+              href="/admin/orders"
+              className="text-gold"
+            >
+              Orders
+            </Link>
+            <span className="text-violet">·</span>
+            <Link
+              href="/"
+              className="text-cream-deep hover:text-gold transition-colors"
+            >
+              Storefront
+            </Link>
+            <span className="text-violet">·</span>
+            <SignOutButton />
+          </nav>
+        </div>
+      </header>
+
     <section className="container-wide py-12">
       <div className="flex items-end justify-between gap-6 flex-wrap">
         <div>
@@ -81,8 +111,6 @@ export default async function AdminOrdersPage({
             Orders
           </h1>
         </div>
-        <form action="/api/admin/login" method="post" className="hidden" />
-        <SignOutButton />
       </div>
 
       {/* Source status warnings */}
@@ -203,6 +231,7 @@ export default async function AdminOrdersPage({
         /api/webhooks/xendit).
       </p>
     </section>
+    </>
   );
 }
 
@@ -244,13 +273,11 @@ function StatusPill({ status }: { status: OrderStatus }) {
 
 function SignOutButton() {
   return (
-    <form action="/admin/logout" method="get">
-      <button
-        type="submit"
-        className="text-[12px] uppercase tracking-[0.22em] text-cream-deep hover:text-gold transition-colors"
-      >
-        Sign out
-      </button>
-    </form>
+    <Link
+      href="/admin/logout"
+      className="text-cream-deep hover:text-gold transition-colors"
+    >
+      Sign out
+    </Link>
   );
 }
