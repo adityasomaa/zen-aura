@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ZenAura Bali
 
-## Getting Started
+Custom storefront for **ZenAura Bali** — bohemian fashion, silver jewelry, and
+spiritual treasures handcrafted in Ubud, Bali. Migrated from Shopify to a fully
+custom stack hosted on Vercel.
 
-First, run the development server:
+## Stack
+
+| Layer | Tool |
+| --- | --- |
+| Framework | Next.js 16 (App Router) + React 19 + TypeScript |
+| Styling | Tailwind CSS v4 (CSS-first theme tokens) |
+| Commerce | Stripe (USD) + Xendit (IDR) |
+| Products | MDX files in `src/content/products/` (source of truth) |
+| Content | MDX in `src/content/pages/` |
+| Images | Vercel Blob (`@vercel/blob`) |
+| Email | Resend (transactional + audiences) |
+| Motion | GSAP + ScrollTrigger |
+| Hosting | Vercel |
+
+## Quick start
 
 ```bash
+npm install
+cp .env.example .env.local      # fill in keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/                       Next.js App Router pages + API routes
+  components/                React components (layout, product, cart, …)
+  content/
+    products/                One MDX file per product (the catalog)
+    pages/                   Long-form pages (about, shipping, terms, …)
+  lib/                       Shared utilities (stripe, xendit, currency, …)
+scripts/
+  migrate-products.mjs       Regenerate product MDX from _scrape/products/catalog.json
+_scrape/                     Raw scrape of the legacy Shopify store (gitignored)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Managing the catalog
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The catalog is **40 MDX files** under `src/content/products/`. Each file's
+frontmatter is the product record (handle, prices, variants, images); the body
+is the description in Markdown.
 
-## Deploy on Vercel
+To add a product: copy an existing MDX file, edit the frontmatter and body,
+then create the matching Stripe Product in the Stripe Dashboard. Paste the
+Stripe Product ID into `stripeProductId` in the frontmatter.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To bulk-regenerate from a fresh Shopify export, drop a new `catalog.json` into
+`_scrape/products/` and re-run:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+node scripts/migrate-products.mjs
+```
+
+## Deployment
+
+Push to `main` → Vercel auto-deploys. Preview deploys for every branch and PR.
+
+Set these env vars in the Vercel dashboard (see `.env.example` for the full list):
+
+- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+- `XENDIT_SECRET_KEY`, `XENDIT_WEBHOOK_TOKEN`
+- `BLOB_READ_WRITE_TOKEN`
+- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`
+- `NEXT_PUBLIC_SITE_URL`
+
+## License
+
+All rights reserved · ZenAura Bali.

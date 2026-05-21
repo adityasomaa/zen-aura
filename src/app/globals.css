@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
+/* ===========================================================
+   ZenAura Bali — Design Tokens
+   Editorial bohemian: cream paper, charcoal ink, earth accents.
+   =========================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Neutrals — warm paper */
+  --paper: #f6f1ea;
+  --paper-deep: #ece4d8;
+  --ink: #1c1a17;
+  --ink-soft: #4a4640;
+  --ink-muted: #807a72;
+  --line: #d9cfc0;
+
+  /* Earth accents */
+  --terracotta: #b85838;
+  --ochre: #c4904a;
+  --sage: #7a8a6a;
+  --plum: #5e3b4a;
+  --teal-deep: #2e4f4a;
+
+  /* Semantic */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --accent: var(--terracotta);
 }
 
 @theme inline {
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-terracotta: var(--terracotta);
+  --color-ochre: var(--ochre);
+  --color-sage: var(--sage);
+  --color-plum: var(--plum);
+  --color-teal-deep: var(--teal-deep);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html, body { height: 100%; }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display text utility */
+.font-display {
+  font-family: var(--font-display);
+  font-feature-settings: "liga", "dlig";
+  letter-spacing: -0.01em;
+}
+
+/* Section gutters */
+.container-narrow { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+.container-wide   { max-width: 1480px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+/* Hairline divider */
+.rule { border-top: 1px solid var(--line); }
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }

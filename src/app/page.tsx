@@ -1,65 +1,70 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      {/* HERO — editorial split */}
+      <section className="container-wide pt-12 md:pt-24 pb-20">
+        <div className="grid md:grid-cols-12 gap-10 items-end">
+          <div className="md:col-span-7">
+            <div className="text-xs uppercase tracking-[0.25em] text-ink-muted mb-6">
+              Ubud · Bali · Est. 2023
+            </div>
+            <h1 className="font-display text-[clamp(2.75rem,8vw,6.5rem)] leading-[0.95] tracking-tight">
+              Cosmic creations <br />
+              for <em className="italic text-terracotta">divine beings.</em>
+            </h1>
+            <p className="mt-8 max-w-xl text-lg text-ink-soft leading-relaxed">
+              Handcrafted bohemian fashion, silver jewelry, and spiritual
+              treasures, made in Ubud by a collective of visionary artisans.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href="/shop/fashion"
+                className="inline-flex items-center gap-2 bg-ink text-paper px-6 py-3 text-sm uppercase tracking-widest hover:bg-terracotta transition-colors"
+              >
+                Shop the collection
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 border border-ink px-6 py-3 text-sm uppercase tracking-widest hover:bg-ink hover:text-paper transition-colors"
+              >
+                Our story
+              </Link>
+            </div>
+          </div>
+
+          <div className="md:col-span-5">
+            <div className="aspect-[3/4] bg-gradient-to-br from-paper-deep via-ochre/20 to-terracotta/30 border border-line" />
+            <div className="mt-3 text-xs uppercase tracking-widest text-ink-muted">
+              Halter Dress · Jungle Teal
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* CATEGORIES */}
+      <section className="container-wide pb-24">
+        <div className="rule pt-10 grid gap-8 md:grid-cols-3">
+          {[
+            { title: "Fashion", href: "/shop/fashion", note: "Viscose halter dresses, drapes, festival hats." },
+            { title: "Jewelry", href: "/shop/jewelry", note: "Silver adornments. Spiritual amulets." },
+            { title: "Interiors", href: "/shop/interiors", note: "Lighting, painted decor, ritual objects." },
+          ].map((c) => (
+            <Link
+              key={c.href}
+              href={c.href}
+              className="group block border border-line bg-paper hover:bg-paper-deep/40 transition-colors p-8"
+            >
+              <div className="font-display text-3xl mb-2">{c.title}</div>
+              <p className="text-sm text-ink-soft mb-6">{c.note}</p>
+              <span className="text-xs uppercase tracking-widest text-ink-muted group-hover:text-terracotta transition-colors">
+                Browse →
+              </span>
+            </Link>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }
