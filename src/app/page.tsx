@@ -17,9 +17,12 @@ export default function Home() {
 
   const hero = pool.find((p) => p.images[0]) ?? all[0];
   const showcase = pool.find((p) => p !== hero && p.images[0]) ?? hero;
-  const collectionGrid = pool
+  // "Wear the cosmos." showcases the 10 most recently uploaded products
+  // (getAllProducts() returns them in createdAt-desc order). We skip the
+  // hero + showcase pieces so they aren't repeated within the same scroll.
+  const collectionGrid = all
     .filter((p) => p !== hero && p !== showcase && p.images[0])
-    .slice(0, 8);
+    .slice(0, 10);
 
   const showcaseTitle = showcase.title.replace(/[🪬🌴🔮✨💫]/g, "").trim();
 
@@ -141,7 +144,7 @@ export default function Home() {
           <Reveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div className="reveal-item">
               <div className="text-[11px] uppercase tracking-[0.28em] text-gold/70 mb-2">
-                The collection · {all.length} pieces
+                Latest arrivals · {collectionGrid.length} of {all.length} pieces
               </div>
               <h2 className="font-display text-cream text-3xl md:text-5xl tracking-tight leading-[1.02]">
                 Wear the cosmos.
