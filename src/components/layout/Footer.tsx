@@ -34,6 +34,10 @@ export function Footer() {
             Handcrafted bohemian fashion, silver jewelry, and spiritual
             treasures, made in Ubud, Bali.
           </p>
+          <p className="italic text-[13px] text-cream-deep/80 mt-4 max-w-xs leading-relaxed">
+            Supporting talented family-run craftswomen &amp; craftsmen throughout
+            Bali &amp; Java.
+          </p>
         </div>
 
         <div>

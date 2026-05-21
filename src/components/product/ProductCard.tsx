@@ -6,10 +6,12 @@ import { ProductCardPrice } from "./ProductCardPrice";
 interface Props {
   product: Product;
   priority?: boolean;
-  /** Aspect ratio class — defaults to portrait. */
+  /** Aspect ratio class — defaults to elongated portrait pill. */
   aspect?: string;
   /** Visual size — controls title scale. */
   size?: "sm" | "md" | "lg";
+  /** Frame shape — "pill" (oval/stadium) or "rounded" (soft rectangle). */
+  shape?: "pill" | "rounded";
 }
 
 const TITLE_SIZE = {
@@ -23,10 +25,17 @@ export function ProductCard({
   priority,
   aspect = "aspect-[4/5]",
   size = "md",
+  shape = "pill",
 }: Props) {
   const front = product.images[0];
   const back = product.images[1] ?? product.images[0];
   const cleanTitle = product.title.replace(/[🪬🌴🔮✨💫]/g, "").trim();
+
+  // Long oval pill — true stadium on portrait; rounded fallback if requested
+  const shapeClass =
+    shape === "pill"
+      ? "rounded-full"
+      : "rounded-3xl";
 
   return (
     <Link
@@ -36,7 +45,7 @@ export function ProductCard({
       data-cursor="link"
     >
       <div
-        className={`peek-card relative ${aspect} overflow-hidden rounded-2xl ring-1 ring-violet/60 bg-violet`}
+        className={`peek-card relative ${aspect} overflow-hidden ${shapeClass} ring-1 ring-violet/60 bg-violet`}
       >
         {front && (
           <Image
@@ -58,28 +67,28 @@ export function ProductCard({
           />
         )}
         {product.compareAtUsd && product.compareAtUsd > product.priceUsd && (
-          <div className="absolute top-3 left-3 bg-midnight/85 text-gold text-[10px] uppercase tracking-[0.18em] px-2.5 py-1 rounded-full backdrop-blur-sm">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-midnight/85 text-gold text-[10px] uppercase tracking-[0.18em] px-3 py-1 rounded-full backdrop-blur-sm">
             Sale
           </div>
         )}
       </div>
-      <div className="mt-3 flex items-start justify-between gap-2">
-        <div className="min-w-0">
-          <div
-            className={`font-display ${TITLE_SIZE[size]} leading-snug text-cream group-hover:text-gold transition-colors line-clamp-2`}
-          >
-            {cleanTitle}
-          </div>
-          {product.subtitle && size !== "sm" && (
-            <div className="text-[12px] italic text-cream-deep mt-0.5 truncate">
-              {product.subtitle}
-            </div>
-          )}
+      <div className="mt-3 px-1 text-center">
+        <div
+          className={`font-display ${TITLE_SIZE[size]} leading-snug text-cream group-hover:text-gold transition-colors line-clamp-2`}
+        >
+          {cleanTitle}
         </div>
-        <ProductCardPrice
-          priceUsd={product.priceUsd}
-          priceIdr={product.priceIdr}
-        />
+        {product.subtitle && size !== "sm" && (
+          <div className="text-[12px] italic text-cream-deep mt-0.5 truncate">
+            {product.subtitle}
+          </div>
+        )}
+        <div className="mt-1">
+          <ProductCardPrice
+            priceUsd={product.priceUsd}
+            priceIdr={product.priceIdr}
+          />
+        </div>
       </div>
     </Link>
   );

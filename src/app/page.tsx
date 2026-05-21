@@ -296,9 +296,21 @@ export default function Home() {
             </div>
             <div className="reveal-item grid grid-cols-3 gap-3 md:gap-5">
               {[
-                { title: "Fashion", href: "/shop/fashion", count: "34 pieces" },
-                { title: "Interiors", href: "/shop/interiors", count: "3 pieces" },
-                { title: "Jewelry", href: "/shop/jewelry", count: "Coming soon" },
+                {
+                  title: "Fashion",
+                  href: "/shop/fashion",
+                  caption: "Alternative Attire · Ubud",
+                },
+                {
+                  title: "Interiors",
+                  href: "/shop/interiors",
+                  caption: "Bohemian Décor · Bali",
+                },
+                {
+                  title: "Jewelry",
+                  href: "/shop/jewelry",
+                  caption: "Bijoux · Amed, East Bali",
+                },
               ].map((c) => (
                 <Link
                   key={c.href}
@@ -319,8 +331,8 @@ export default function Home() {
                   <div className="relative font-script text-gold text-4xl md:text-5xl lg:text-6xl drop-shadow-[0_0_14px_rgba(238,217,119,0.45)]">
                     {c.title}
                   </div>
-                  <div className="relative text-[10px] mt-2 uppercase tracking-[0.2em] text-cream/70">
-                    {c.count}
+                  <div className="relative text-[10px] mt-2 uppercase tracking-[0.2em] text-cream/70 text-center px-2">
+                    {c.caption}
                   </div>
                 </Link>
               ))}
