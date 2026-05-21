@@ -10,6 +10,7 @@ import { CookieConsent } from "@/components/layout/CookieConsent";
 import { HideOnAdmin } from "@/components/layout/HideOnAdmin";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { Cursor } from "@/components/motion/Cursor";
+import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/JsonLd";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -43,6 +44,8 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${island.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-eggplant text-cream selection-gold">
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
         <PageTransition />
         <HideOnAdmin>
           <WelcomePopup />

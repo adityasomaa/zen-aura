@@ -4,6 +4,7 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { AddToCart } from "@/components/product/AddToCart";
 import { ProductPriceDisplay } from "@/components/product/ProductPriceDisplay";
+import { ProductJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import {
   getAllProducts,
   getProductByHandle,
@@ -52,6 +53,18 @@ export default async function ProductPage({
 
   return (
     <>
+      <ProductJsonLd product={product} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Shop", url: "/shop" },
+          {
+            name: product.category.charAt(0).toUpperCase() + product.category.slice(1),
+            url: `/shop/${product.category}`,
+          },
+          { name: cleanTitle, url: `/products/${product.handle}` },
+        ]}
+      />
       <section className="container-wide py-12 grid lg:grid-cols-2 gap-12 lg:gap-20">
         <ProductGallery images={product.images} />
 
