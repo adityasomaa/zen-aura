@@ -1,32 +1,41 @@
 import { NextResponse } from "next/server";
-import { adminCookieName, adminCookieValue } from "@/lib/admin-auth";
+import {
+  adminCookieName,
+  adminCookieValue,
+  verifyCredentials,
+} from "@/lib/admin-auth";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  let body: { password?: string };
+  let body: { username?: string; password?: string };
   try {
-    body = (await req.json()) as { password?: string };
+    body = (await req.json()) as { username?: string; password?: string };
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
-  const secret = process.env.ADMIN_SECRET;
-  if (!secret) {
+
+  const username = (body.username ?? "").trim();
+  const password = body.password ?? "";
+
+  if (!username || !password) {
     return NextResponse.json(
-      { error: "ADMIN_SECRET not configured on the server" },
-      { status: 500 },
+      { error: "Username and password required" },
+      { status: 400 },
     );
   }
-  if (!body.password || body.password !== secret) {
+
+  if (!verifyCredentials(username, password)) {
     return NextResponse.json(
-      { error: "Incorrect password" },
+      { error: "Incorrect username or password" },
       { status: 401 },
     );
   }
+
   const res = NextResponse.json({ ok: true });
   res.cookies.set({
     name: adminCookieName(),
-    value: adminCookieValue(secret),
+    value: adminCookieValue(username, password),
     httpOnly: true,
     secure: true,
     sameSite: "lax",
